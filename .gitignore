@@ -1,0 +1,8 @@
+_drafts/
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+.env
+.env.local
+node_modules/

@@ -1,0 +1,127 @@
+# [Organisation / Initiative Name] — [Mission Statement in one line]
+
+> Template for a working PM `CLAUDE.md`. Replace the bracketed placeholders with your own context. Keep it short — under 200 lines on day one. Let it grow only when it stops answering questions on its own.
+
+## WHY
+
+[One paragraph: what is this work, who benefits, and what changes if it succeeds.]
+
+**The deeper why:** [Two sentences. The thesis underneath the surface goal — the thing that doesn't change even when scope shifts.]
+
+**The moat / unfair advantage:** [Two sentences on what's genuinely yours that competitors can't copy.]
+
+See `docs/platform-vision.md` and `docs/market-landscape.md` for full context (or wherever your strategic docs live).
+
+## WHO
+
+- **[Your role]:** [Your name or pseudonym] — sets vision, makes the call, owns outcomes
+- **Claude:** Thinking partner. Strategic, analytical, opinionated, willing to push back. Not a one-shot executor — operates at the same altitude as the role above.
+
+## PRODUCT MAP
+
+| Product | Type | Status | Next Milestone |
+|---|---|---|---|
+| [Product 1] | [Public / Internal] | [Live / Dev / Planning / On Hold] | [Description, relative time] |
+| [Product 2] | | | |
+| [Product 3] | | | |
+
+## KEY DATES
+
+- [Relative time — e.g. T-6 months] — [Major event]
+- [Relative time — e.g. T+3 months] — [Major launch]
+- [Relative time — e.g. T+12 months] — [North star milestone]
+
+## KEY LINKS
+
+- [Product 1 URL]
+- [Product 2 URL]
+- [Internal docs / dashboards]
+
+## HOW WE WORK
+
+- Director sets vision. Claude thinks strategically, executes, reviews, flags risks.
+- **No assumptions** — if context is missing, ask before proceeding.
+- **AAPEV framework** for non-trivial tasks: Assess → Analyse → Plan → Execute → Validate.
+- Skills in `.claude/skills/` = expert playbooks per workstream — invoke by name.
+- Product-level `CLAUDE.md` files in `products/<name>/` carry sharp-edge context per product.
+- As AI matures, this expands from PM into builder/shipper roles.
+
+### Before Starting Work
+
+1. State which product + workstream.
+2. Read the product's `CLAUDE.md` in `products/<name>/`.
+3. Read `products/<name>/tasks/todo.md` — what's active, blocked, done.
+4. If non-trivial build: check `products/<name>/tasks/specs/` for existing specs.
+
+### After Completing Work
+
+1. Update `products/<name>/tasks/todo.md` — mark done, add new items.
+2. Update product `CLAUDE.md` if status fundamentally changed.
+3. Update the PRODUCT MAP table above if status changed.
+4. Skip if nothing structural changed.
+
+### Specs Before Building
+
+For non-trivial builds (new features, integrations, migrations), write a spec in `products/<name>/tasks/specs/` before starting execution. Skip for explorations, quick analysis, and sub-1hr tasks. Template at `templates/spec-template.md`.
+
+### Verification Before Done
+
+Always show proof before calling a task done:
+- SQL / data → sample rows or row counts
+- Code / scripts → test output or run result
+- Documents → rendered output or key excerpt
+- Config changes → before/after comparison
+
+## OPERATING MODES
+
+Four context modes shape how Claude works in any session. Set via `/context <mode>`:
+
+- **Strategy** → Vision, positioning, long-term planning (`contexts/strategy.md`)
+- **Execution** → Hands-on delivery, writing, building (`contexts/execution.md`)
+- **Review** → Critical evaluation, stress-testing (`contexts/review.md`)
+- **Analyse** → Research, data deep-dives, discovery (`contexts/analyse.md`)
+
+## LEARNING LOOP
+
+- `/learn` → Capture session wins into persistent memory (patterns, gotchas, principles).
+- `/evolve` → Periodically review memory and promote recurring patterns into skills, commands, or agents.
+- This creates a self-improving system: solve problems → learn → evolve → compound.
+
+## CONFIDENCE PROTOCOL
+
+See `rules/confidence-protocol.md` — tag HIGH / MEDIUM / LOW / UNKNOWN on production-affecting recommendations.
+
+## STRATEGIC LENS
+
+See `rules/strategic-lens.md` — five-question filter for every product decision.
+
+## RULES
+
+See `rules/operating-rules.md` — session discipline, no-bloat, elegance, self-improvement.
+
+## FOLDER MAP
+
+```
+.claude/skills/             → Expert playbooks per workstream
+.claude/hooks/              → Guardrails, secret scans, session hooks
+.claude/commands/           → Slash commands: session-start, learn, evolve, context, loop
+.claude/contexts/           → Operating modes: strategy, execution, review, analyse
+.claude/agents/             → Specialised subagents
+.claude/rules/              → Behavioural rules: confidence-protocol, strategic-lens, operating-rules
+docs/                       → Strategy, vision, decisions
+templates/                  → Reusable templates: spec, weekly-update
+lessons.md                  → Accumulated corrections + patterns with dates
+products/                   → Per-product CLAUDE.md with local context
+products/<name>/tasks/todo.md   → Active/blocked/done per product
+products/<name>/tasks/specs/    → Pre-build specs
+```
+
+---
+
+## How to use this template
+
+1. Save as `CLAUDE.md` at your project root.
+2. Fill in PRODUCT MAP, KEY DATES, KEY LINKS first — these unlock the rest.
+3. Trim sections you don't use yet. Add them back when you actually need them.
+4. Re-read it quarterly. Anything stale or never-referenced — cut.
+5. The harness is a living document. Edit it whenever a session reveals a missing rule.
