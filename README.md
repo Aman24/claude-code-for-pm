@@ -10,18 +10,20 @@ PMs (not engineers) who already know Claude Code exists and want a working opera
 
 ## What this is
 
-A working PM operating model with five layers:
+A working PM operating model. Here's what's in the repo today, and what's landing next:
 
 | Layer | What it does | Status |
 |---|---|---|
-| **`CLAUDE.md.template`** | The harness. Sets role, north star, product map, how-we-work for one PM running a portfolio. | v0 |
-| **`rules/`** | Behavioural rules Claude follows every session — confidence tagging, strategic lens, operating discipline. | v0 |
-| **`contexts/`** | Four operating modes — Strategy / Execution / Review / Analyse — switched per task. | v0 |
-| **`commands/`** | Slash commands that codify session protocols — `/session-start`, `/context`, `/learn`. More each week. | v0 |
-| **`agents/`** | Specialised subagents for repeatable work (exec updates, risk scans, prompt tuning). | shipping Week 3 |
-| **`hooks/`** | Safety + automation layer — pre-bash guards, write guards, secret scans, pre-compact saves. | shipping Week 4 |
-| **`skills/`** | A small curated set of PM skills I've built and use. ~12 sanitized originals. | shipping Weeks 5-7 |
-| **`templates/`** | Spec template (v0). Weekly-update template (week 5). | v0 |
+| **`CLAUDE.md.template`** | The harness. Sets role, north star, product map, how-we-work for one PM running a portfolio. | **Live** |
+| **`rules/`** | Behavioural rules Claude follows every session — confidence tagging, strategic lens, operating discipline. | **Live** · 3 rules |
+| **`contexts/`** | Four operating modes — Strategy / Execution / Review / Analyse — switched per task. | **Live** · 4 modes |
+| **`commands/`** | Slash commands that codify the workflow — session start, mode switching, the `/learn` → `/evolve` memory loop, automation, and reporting. | **Live** · 8 commands |
+| **`templates/`** | Spec template for non-trivial builds. | **Live** · 1 |
+| **`agents/`** | Specialised subagents for repeatable work (exec updates, risk scans, prompt tuning). | **Coming next** |
+| **`hooks/`** | Safety + automation layer — pre-bash guards, write guards, secret scans, pre-compact saves. | **Planned** |
+| **`skills/`** | A small curated set of PM skills I've built and use. ~12 sanitized originals. | **Planned** |
+
+*Live* = in the repo now · *Coming next* = the next weekly drop · *Planned* = on the roadmap.
 
 ## How to use it
 
@@ -30,7 +32,7 @@ A working PM operating model with five layers:
 3. Run a session. The first command to try: `/context strategy` for a high-altitude session, or `/context execution` for hands-on work.
 4. After a non-trivial session, run `/learn` to capture what worked into a memory file.
 
-The artefacts are designed to be read in order: `CLAUDE.md.template` → `rules/` → `contexts/` → `commands/`. The whole tree under 1,000 lines on v0.
+The artefacts are designed to be read in order: `CLAUDE.md.template` → `rules/` → `contexts/` → `commands/`. The whole tree is well under 1,000 lines.
 
 ## What this isn't
 
@@ -43,7 +45,7 @@ The artefacts are designed to be read in order: `CLAUDE.md.template` → `rules/
 
 ## Cadence
 
-Weekly drops. v0 ships the foundation (rules + contexts + first 3 commands + harness template). Each week through Week 8 layers in another subsystem. See commit history for what's landed.
+Weekly drops. The foundation landed first — harness template, rules, contexts, and the core commands. Each drop layers in another subsystem (agents next, then hooks, then skills). See the commit history for what's shipped.
 
 ## Licence
 
