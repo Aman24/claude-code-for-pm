@@ -34,8 +34,6 @@ The artefacts are designed to be read in order: `CLAUDE.md.template` → `rules/
 
 ## What this isn't
 
-- **Not a skill catalog.** For breadth, look at [`phuryn/pm-skills`](https://github.com/phuryn/pm-skills) (62 skills, MIT-licensed, much wider).
-- **Not a vendor product.** For dev-Claude-Code at scale, see [ecc.tools](https://ecc.tools).
 - **Not a tutorial.** The README is short on purpose. The files are the documentation.
 - **Not opinionated about your stack** — works whether you're using Claude Code, Codex, or anything that reads a CLAUDE.md harness and slash commands.
 
