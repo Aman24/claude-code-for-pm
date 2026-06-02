@@ -20,8 +20,8 @@ A working PM operating model. Here's what's in the repo today, and what's landin
 | **`commands/`** | Slash commands that codify the workflow — session start, mode switching, the `/learn` → `/evolve` memory loop, automation, and reporting. | **Live** · 8 commands |
 | **`templates/`** | Spec template for non-trivial builds. | **Live** · 1 |
 | **`agents/`** | Specialised subagents for repeatable work (exec updates, risk scans, prompt tuning). | **Live** · 4 agents |
-| **`hooks/`** | Safety + automation layer — pre-bash guards, write guards, secret scans, pre-compact saves. | **Coming next** |
-| **`skills/`** | A small curated set of PM skills I've built and use. ~12 sanitized originals. | **Planned** |
+| **`hooks/`** | Safety + automation layer — pre-bash guards, write guards, secret scans, pre-compact saves. | **Live** · 7 scripts + guardrails |
+| **`skills/`** | A small curated set of PM skills I've built and use. ~12 sanitized originals. | **Coming next** |
 
 *Live* = in the repo now · *Coming next* = the next weekly drop · *Planned* = on the roadmap.
 
@@ -45,7 +45,7 @@ The artefacts are designed to be read in order: `CLAUDE.md.template` → `rules/
 
 ## Cadence
 
-Weekly drops. The foundation landed first — harness template, rules, contexts, core commands, and the first round of agents. Each remaining drop layers in another subsystem (hooks next, then skills). See the commit history for what's shipped.
+Weekly drops. The foundation landed first — harness template, rules, contexts, core commands, agents, and the hooks layer. The remaining drop is skills. See the commit history for what's shipped.
 
 ## Licence
 
