@@ -1,0 +1,8 @@
+# Hooks must keep LF endings. A CRLF shebang becomes `/bin/bash\r`, which macOS
+# and Linux report as "bad interpreter" — every hook fails to run, quietly.
+# Windows contributors with core.autocrlf=false would otherwise commit CRLF.
+*.sh text eol=lf
+
+# Markdown and JSON normalise to LF in the repo; checkout is left to the platform.
+*.md text
+*.json text
