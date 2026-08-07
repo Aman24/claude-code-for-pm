@@ -7,9 +7,13 @@
 # operations the first time the hook errored. The lesson: hooks that block by default
 # are a foot-gun. Fail-open on parse errors, fail-explicit on detection.
 
+HOOK_LIB="$(dirname "$0")/lib/hookjson.sh"
+[ -f "$HOOK_LIB" ] && . "$HOOK_LIB"
+declare -f hj_field >/dev/null 2>&1 || hj_field() { printf ''; }
+
 INPUT=$(cat 2>/dev/null || true)
-FILE_PATH=$(echo "$INPUT" | jq -r '.tool_input.file_path // empty' 2>/dev/null || true)
-CONTENT=$(echo "$INPUT" | jq -r '.tool_input.content // .tool_input.new_string // empty' 2>/dev/null || true)
+FILE_PATH=$(hj_field "$INPUT" tool_input.file_path tool_input.notebook_path)
+CONTENT=$(hj_field "$INPUT" tool_input.content tool_input.new_string)
 
 # If we couldn't parse, allow through (static deny handles protected paths)
 if [ -z "$FILE_PATH" ] && [ -z "$CONTENT" ]; then
@@ -81,8 +85,7 @@ fi
 # --- Decision ---
 
 if [ -n "$BLOCKED" ]; then
-  echo "{\"hookSpecificOutput\":{\"hookEventName\":\"PreToolUse\",\"permissionDecision\":\"deny\",\"permissionDecisionReason\":\"BLOCKED: $BLOCKED. Use environment variables instead.\"}}"
-  exit 0
+  hj_deny "BLOCKED: $BLOCKED. Use environment variables instead."
 fi
 
 # Allow the write

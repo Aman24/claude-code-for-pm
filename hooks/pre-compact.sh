@@ -1,10 +1,12 @@
 #!/bin/bash
 # PreCompact hook: preserves working context before context window compaction
 # Prevents losing track of in-flight work during long sessions
-set -euo pipefail
-
-# Fail-closed: if this hook errors, still output preservation instructions
-trap 'echo "CONTEXT PRESERVATION: Hook errored but MUST retain: product, task, decisions, modified files, pending actions."; exit 0' ERR
+#
+# No `set -e`, no ERR trap. The snapshot below is best-effort by design — a missing
+# products/ directory or an absent git repo is normal, not an error. Under `set -e`
+# the trap fired on those ordinary cases, truncating the log AND replacing the full
+# preservation message with the one-line fallback. The instructions at the end are
+# the part that actually matters, so nothing above them may abort the script.
 
 TIMESTAMP=$(date '+%Y-%m-%d_%H-%M-%S')
 LOG_DIR="$HOME/.claude/logs"
@@ -33,9 +35,11 @@ LOG_FILE="$LOG_DIR/pre-compact-$TIMESTAMP.log"
   echo "CWD: $(pwd)"
   echo ""
 
-  # Recently modified files in products/ (likely active work)
+  # Recently modified files in products/ (likely active work).
+  # -mmin is portable; the old `-newer <(date -d ...)` form needed GNU date and
+  # process substitution, and silently matched nothing on macOS.
   echo "--- Recently Modified Product Files (last 2h) ---"
-  find products/ -name "*.md" -newer <(date -d '2 hours ago' +%Y%m%d%H%M 2>/dev/null || echo /dev/null) -type f 2>/dev/null | head -15 || true
+  find products/ -name "*.md" -type f -mmin -120 2>/dev/null | head -15 || true
   echo ""
 
   # Active tasks across products
@@ -43,8 +47,11 @@ LOG_FILE="$LOG_DIR/pre-compact-$TIMESTAMP.log"
   for todo in products/*/tasks/todo.md; do
     if [ -f "$todo" ]; then
       PRODUCT=$(echo "$todo" | sed 's|products/||;s|/tasks/todo.md||')
-      IN_PROGRESS=$(grep -c "In Progress\|WIP\|- \[ \]" "$todo" 2>/dev/null || echo 0)
-      if [ "$IN_PROGRESS" -gt 0 ]; then
+      # grep -c prints 0 and exits 1 when nothing matches, so `|| echo 0` used to
+      # append a second 0 and produce "0\n0" — an invalid integer.
+      IN_PROGRESS=$(grep -c "In Progress\|WIP\|- \[ \]" "$todo" 2>/dev/null || true)
+      [ -z "$IN_PROGRESS" ] && IN_PROGRESS=0
+      if [ "$IN_PROGRESS" -gt 0 ] 2>/dev/null; then
         echo "  $PRODUCT: $IN_PROGRESS active items"
       fi
     fi

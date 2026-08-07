@@ -1,11 +1,17 @@
 #!/bin/bash
 # PreToolUse hook: blocks destructive operations and warns on bulk data ops
 
-# Fail-closed: if critical parsing fails, deny the action
-INPUT=$(cat 2>/dev/null || true)
-COMMAND=$(echo "$INPUT" | jq -r '.tool_input.command // empty' 2>/dev/null || true)
+# Fail-open on parse, fail-explicit on detection. This hook cannot deny what it
+# cannot read, so the static deny list in settings.json is the real backstop for
+# anything critical. (An earlier version claimed "fail-closed" here while the very
+# next line allowed the command through — the comment was wrong, not the code.)
+HOOK_LIB="$(dirname "$0")/lib/hookjson.sh"
+[ -f "$HOOK_LIB" ] && . "$HOOK_LIB"
+declare -f hj_field >/dev/null 2>&1 || hj_field() { printf ''; }
 
-# If we couldn't parse the command at all, allow through (static deny handles the rest)
+INPUT=$(cat 2>/dev/null || true)
+COMMAND=$(hj_field "$INPUT" tool_input.command)
+
 if [ -z "$COMMAND" ]; then
   exit 0
 fi

@@ -2,8 +2,13 @@
 # UserPromptSubmit hook: scans user input for accidentally pasted credentials
 # Catches API keys, tokens, passwords before they enter the conversation
 
+HOOK_LIB="$(dirname "$0")/lib/hookjson.sh"
+[ -f "$HOOK_LIB" ] && . "$HOOK_LIB"
+declare -f hj_field >/dev/null 2>&1 || hj_field() { printf ''; }
+
 INPUT=$(cat 2>/dev/null || true)
-USER_MSG=$(echo "$INPUT" | jq -r '.user_prompt // empty' 2>/dev/null || true)
+# Field name has varied across versions — accept both rather than guess.
+USER_MSG=$(hj_field "$INPUT" prompt user_prompt)
 
 if [ -z "$USER_MSG" ]; then
   exit 0
