@@ -15,12 +15,12 @@ A working PM operating model. Here's what's in the repo today, and what's landin
 | Layer | What it does | Status |
 |---|---|---|
 | **`CLAUDE.md.template`** | The harness. Sets role, north star, product map, how-we-work for one PM running a portfolio. | **Live** |
-| **`rules/`** | Behavioural rules Claude follows every session — confidence tagging, strategic lens, operating discipline. | **Live** · 3 rules |
+| **`rules/`** | Behavioural rules Claude follows every session — confidence tagging, strategic lens, operating discipline, writing standards. | **Live** · 4 rules |
 | **`contexts/`** | Four operating modes — Strategy / Execution / Review / Analyse — switched per task. | **Live** · 4 modes |
 | **`commands/`** | Slash commands that codify the workflow — session start, mode switching, the `/learn` → `/evolve` memory loop, automation, and reporting. | **Live** · 8 commands |
 | **`templates/`** | Spec template for non-trivial builds. | **Live** · 1 |
 | **`agents/`** | Specialised subagents for repeatable work (exec updates, risk scans, prompt tuning). | **Live** · 4 agents |
-| **`hooks/`** | Safety + automation layer — pre-bash guards, write guards, secret scans, pre-compact saves. | **Live** · 7 scripts + guardrails |
+| **`hooks/`** | Safety + automation layer — pre-bash guards, write guards, secret scans, pre-compact saves. No `jq` dependency; every hook has a positive and negative test. | **Live** · 7 scripts + shared reader + guardrails |
 | **`skills/`** | A small curated set of PM skills I've built and use. ~12 sanitized originals. | **Coming next** |
 
 *Live* = in the repo now · *Coming next* = the next weekly drop · *Planned* = on the roadmap.
@@ -33,6 +33,12 @@ A working PM operating model. Here's what's in the repo today, and what's landin
 4. After a non-trivial session, run `/learn` to capture what worked into a memory file.
 
 The artefacts are designed to be read in order: `CLAUDE.md.template` → `rules/` → `contexts/` → `commands/`. The whole tree is well under 1,000 lines.
+
+## Reads
+
+- [`docs/walkthrough.md`](docs/walkthrough.md) — how the pieces fit together in a real session.
+- [`docs/adopting-third-party-skills.md`](docs/adopting-third-party-skills.md) — four gates before installing anything from a public catalogue, when to absorb a skill into a rule instead, and the licence trap that catches anyone running a public repo.
+- [`SANITIZATION.md`](SANITIZATION.md) — what stays out of this repo and why.
 
 ## What this isn't
 
